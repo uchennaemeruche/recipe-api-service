@@ -1,25 +1,26 @@
 // Import packages
 const express = require("express");
-const dotenv = require("dotenv");
+require("dotenv").config();
 const cors = require("cors");
-const { HttpException, errorHandler } = require("./services/error_handler");
+const { HttpException, errorHandler } = require("./middleware/error_handler");
+const DbConfig = require("./utils/database");
 
-dotenv.config();
+(async() =>{
+
+/*
+ Setup MySQL Database and table
+*/
+await DbConfig()
 
 /* 
 Instantiate an express app and use PORT 4000 if process.env.PORT is not set.
 */
 const app = express();
-const PORT = process.env.PORT || 5000;
-
-app.get('/', (req, res, next) => {
-    return res.json({
-        msg: "Welcome to our Recipe service"
-    })
-})
+const PORT = process.env.PORT || 4000;
 
 /*
 Set up logger function
+For a production-ready application, you probably will setup logging differently.
 */
 app.use((req, res, next) => {
     res.on("finish", () => {
@@ -42,7 +43,12 @@ app.use(cors()); // pre-flight requests are already handled for all routes
 /*
 Define APi Routes
 */
-app.use("/api/recipes", require("./routes/api_routes"));
+app.get('/', (req, res, next) => {
+    return res.json({
+        msg: "Welcome to our Recipe service"
+    })
+})
+app.use("/api/recipes", require("./routes/api"));
 
 /*
 Define Error Handling middleware for unknown routes
@@ -53,8 +59,8 @@ app.use((req, res, next) => {
 
 app.use(errorHandler);
 
-
-
 app.listen(PORT, () => {
     console.log("Server is running on PORT: ", PORT);
 });
+})()
+

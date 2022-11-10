@@ -1,11 +1,3 @@
-class HttpException extends Error {
-    constructor(statusCode, message, data) {
-        super(message);
-        this.statusCode = statusCode;
-        this.message = message;
-        this.data = data;
-    }
-}
 
 const errorHandler = (error, req, res, next) => {
     let { statusCode = 500, message, data = null } = error;
@@ -19,5 +11,15 @@ const errorHandler = (error, req, res, next) => {
     };
     return res.status(statusCode).json(error);
 };
+
+
+class HttpException extends Error {
+    constructor(statusCode, message, data) {
+        super(message);
+        this.statusCode = statusCode;
+        this.message = message;
+        this.data = data;
+    }
+}
 
 module.exports = { HttpException, errorHandler };

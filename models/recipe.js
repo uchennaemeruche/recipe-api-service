@@ -1,4 +1,4 @@
-// models/recipe.model.js
+// models/recipe.js
 
 const mysqlUtil = require("mysql-query-util");
 

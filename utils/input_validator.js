@@ -1,17 +1,15 @@
 const joi = require("joi");
 
 exports.createRecipeSchema = joi.object({
+    author: joi.string().required(),
     title: joi.string().required(),
-    createdBy: joi.string().required(),
     content: joi.string().required(),
     likes: joi.number(),
-    reviews: joi.string(),
 });
 
 exports.updateRecipeSchema = joi.object({
+    author: joi.string(),
     title: joi.string(),
-    createdBy: joi.string(),
     content: joi.string(),
     likes: joi.number(),
-    reviews: joi.string(),
 })
