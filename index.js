@@ -2,8 +2,11 @@
 const express = require("express");
 require("dotenv").config();
 const cors = require("cors");
+const swaggerUi = require("swagger-ui-express")
 const { HttpException, errorHandler } = require("./middleware/error_handler");
 const DbConfig = require("./utils/database");
+const swaggerOptions = require("./docs/swagger");
+const swaggerJSDoc = require("swagger-jsdoc");
 
 (async() =>{
 
@@ -49,6 +52,12 @@ app.get('/', (req, res, next) => {
     })
 })
 app.use("/api/recipes", require("./routes/api"));
+
+
+// Add Swagger API documentation
+
+const specs = swaggerJSDoc(swaggerOptions)
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(specs, {explorer: true}))
 
 /*
 Define Error Handling middleware for unknown routes
