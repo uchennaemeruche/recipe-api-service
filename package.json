@@ -4,7 +4,8 @@
     "description": "A recipe review api service",
     "main": "index.js",
     "scripts": {
-        "start": "nodemon index.js"
+        "start": "nodemon index.js",
+        "startdoc": "node ./docs/swagger2.js"
     },
     "keywords": [
         "Recipe",
@@ -21,6 +22,7 @@
         "express": "^4.17.1",
         "joi": "^17.3.0",
         "mysql-query-util": "^1.1.0",
+        "swagger-autogen": "^2.22.0",
         "swagger-jsdoc": "^6.2.5",
         "swagger-ui-express": "^4.6.0"
     }

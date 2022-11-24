@@ -1,0 +1,42 @@
+components:
+  schemas:
+    RecipeResponse:
+      type: object
+      properties:
+        id:
+          type: number
+        author:
+          type: string
+        title:
+          type: string
+        content:
+          type: string
+        likes:
+          type: number
+        createdAt:
+          type: string
+      required: [id, author, title, content, likes, createdAt]
+       
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message: 
+          typpe: string
+      required:
+        - code
+        - message
+  responses:  
+    AffectedRow:
+      type: object
+      properties:
+        affectedRows:
+          type: integer
+          description: number of affected rows
+        message:
+          type: string
+          description: success message
+
+
+        

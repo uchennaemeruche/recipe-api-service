@@ -18,13 +18,14 @@ module.exports ={
         },
         servers:[
             {
-                url: "http://localhost:4000/recipe",
+                url: "http://localhost:4000/",
                 description: "Local Server"
             }
         ]
     },
-    apis: ["../routes/api.js"]
+    apis: ['./routes/api.js', './index.js', './docs/definitions.yaml', './docs/components.yaml'],
 }
+
 
 
 

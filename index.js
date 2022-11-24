@@ -5,8 +5,8 @@ const cors = require("cors");
 const swaggerUi = require("swagger-ui-express")
 const { HttpException, errorHandler } = require("./middleware/error_handler");
 const DbConfig = require("./utils/database");
-const swaggerOptions = require("./docs/swagger");
-const swaggerJSDoc = require("swagger-jsdoc");
+const swaggerOptions = require("./docs/swagger.js");
+const swaggerJsDoc = require("swagger-jsdoc");
 
 (async() =>{
 
@@ -43,9 +43,22 @@ app.use(express.json());
 // Enable Cross-Origin Resource Sharing - CORS
 app.use(cors()); // pre-flight requests are already handled for all routes
 
-/*
-Define APi Routes
-*/
+
+// Add Swagger API documentation
+const opts = require("./docs/swagger-output.json")
+const swaggerSpec = swaggerJsDoc(swaggerOptions)
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, {explorer: true}))
+
+
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     description: Returns the homepage
+ *     responses:
+ *       200:
+ *         description: Welcome to our Recipe service
+ */
 app.get('/', (req, res, next) => {
     return res.json({
         msg: "Welcome to our Recipe service"
@@ -54,10 +67,6 @@ app.get('/', (req, res, next) => {
 app.use("/api/recipes", require("./routes/api"));
 
 
-// Add Swagger API documentation
-
-const specs = swaggerJSDoc(swaggerOptions)
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(specs, {explorer: true}))
 
 /*
 Define Error Handling middleware for unknown routes
